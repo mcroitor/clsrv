@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * The configuration file.
+ */
 $dbtype = "mysql";
 $dbname = "clsrv_db";
 $dbhost = "localhost";
@@ -15,8 +17,8 @@ $dsn = "{$dbtype}:dbname={$dbname};host={$dbhost};{$dbspec}";
  * # oracle (OCI): 'oci:dbname=<tns_here>'
  */
 
-$db = [
+$dbcfg = [
     "dsn" => $dsn,
     "username" => "root",
-    "password" => ""
+    "password" => "password"
 ];
