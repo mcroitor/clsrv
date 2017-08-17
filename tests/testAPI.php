@@ -5,27 +5,23 @@
     </head>
     <body>
         <h3>Headers</h3>
-        <div id="#header"></div>
+        <div id="header"></div>
         <h3>Response</h3>
         <div id="result"></div>
         <script type="text/javascript">
-            var _data = {'login': 'tester', 'password': 'tester', 'email': 'i@love.you'};
+            var _data = {'login': '', 'password': '', 'email': 'root@localhost'};
             var url = "http://localhost/clsrv/api/?q=user/create/";
             a = $.ajax({
                 'url': url,
                 'type': 'post',
                 'data': _data,
-                statusCode: {
-                    200: function (data) {
-                        console.log(a.getAllResponseHeaders());
-                        $("#result").html(data);
-                        $("#header").html(a.getAllResponseHeaders());
-                    },
-                    403: function (data) {
-                        //console.log(a.getAllResponseHeaders());
-                        $("#result").html(data);
-                        $("#header").html(a.getAllResponseHeaders());
-                    }
+                success: function(data, status, xhr) {
+                    $("#header").html(xhr.getAllResponseHeaders());
+                    $("#result").html(xhr.responseText);
+                },
+                error: function (xhr, status) {
+                    $("#header").html(xhr.getAllResponseHeaders());
+                    $("#result").html(xhr.responseText);
                 }
             });
         </script>
