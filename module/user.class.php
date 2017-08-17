@@ -8,7 +8,6 @@ include_once '../core/mcapi.interface.php';
  *      user::create
  */
 class user implements mcapi {
-
     var $conn;
 
     function __construct(db $conn) {
@@ -17,7 +16,9 @@ class user implements mcapi {
 
     function try_check_login($login) {
         $q = "SELECT count(*) FROM user_tbl WHERE user_login LIKE '{$login}'";
-        if (count($this->conn->do_query($q)) > 0) {
+        $result = $this->conn->do_query($q);
+        //print_r($result);
+        if ($result[0][0] > 0) {
             $response = "{'error':'login {$login} is used'}";
             header("HTTP/1.0 403 Forbidden");
             header("Content-Type: text/html; charset=utf-8");
@@ -30,8 +31,34 @@ class user implements mcapi {
 
     function try_check_email($email) {
         $q = "SELECT count(*) FROM user_tbl WHERE user_email LIKE '{$email}'";
-        if (count($this->conn->do_query($q)) > 0) {
+        $result = $this->conn->do_query($q);
+        if ($result[0][0] > 0) {
             $response = "{'error':'email {$email} is used'}";
+            header("HTTP/1.0 403 Forbidden");
+            header("Content-Type: text/html; charset=utf-8");
+            header("Content-Encoding: UTF-8");
+            header("Content-Length: " . strlen($response));
+            echo $response;
+            exit();
+        }
+    }
+    private static function check_empty($login, $password, $email) {
+        $result = [];
+        $login = trim($login);
+        $password = trim($password);
+        $email = trim($email);
+        
+        if(strlen($login) === 0){
+            $result[] = "'login is empty'";
+        }
+        if(strlen($password) === 0){
+            $result[] = "'password is empty'";
+        }
+        if(strlen($email) === 0){
+            $result[] = "'email is empty'";
+        }
+        if(count($result) > 0){
+            $response = "{'error':[" . implode(",", $result) . "]}";
             header("HTTP/1.0 403 Forbidden");
             header("Content-Type: text/html; charset=utf-8");
             header("Content-Encoding: UTF-8");
@@ -49,20 +76,23 @@ class user implements mcapi {
         
         //print_r($_REQUEST);
 
+        $this->check_empty($login, $password, $email);
         $this->try_check_login($login);
         $this->try_check_email($email);
+        
+        $this->conn->do_query("INSERT INTO user_tbl VALUES (null, '{$login}', '{$password}', '{$email}')", false);
     }
 
     public function delete($param) {
-        echo "<h3>create</h3>";
+        echo "<h3>delete</h3>";
     }
 
     public function get($param) {
-        echo "<h3>create</h3>";
+        echo "<h3>get</h3>";
     }
 
     public function update($param) {
-        echo "<h3>create</h3>";
+        echo "<h3>update</h3>";
     }
 
 }
