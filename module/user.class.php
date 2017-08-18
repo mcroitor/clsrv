@@ -18,15 +18,9 @@ class user implements mcapi {
     function try_check_login($login) {
         $q = "SELECT count(*) FROM user_tbl WHERE user_login LIKE '{$login}'";
         $result = $this->conn->do_query($q);
-        //print_r($result);
         if ($result[0][0] > 0) {
             $response = "{'error':'login {$login} is used'}";
             httpResponse($response, 403);
-//            header("HTTP/1.0 403 Forbidden");
-//            header("Content-Type: text/html; charset=utf-8");
-//            header("Content-Encoding: UTF-8");
-//            header("Content-Length: " . strlen($response));
-//            echo $response;
         }
     }
 
@@ -36,11 +30,6 @@ class user implements mcapi {
         if ($result[0][0] > 0) {
             $response = "{'error':'email {$email} is used'}";
             httpResponse($response, 403);
-//            header("HTTP/1.0 403 Forbidden");
-//            header("Content-Type: text/html; charset=utf-8");
-//            header("Content-Encoding: UTF-8");
-//            header("Content-Length: " . strlen($response));
-//            echo $response;
         }
     }
 
@@ -62,21 +51,13 @@ class user implements mcapi {
         if (count($result) > 0) {
             $response = "{'error':[" . implode(",", $result) . "]}";
             httpResponse($response, 403);
-//            header("HTTP/1.0 403 Forbidden");
-//            header("Content-Type: text/html; charset=utf-8");
-//            header("Content-Encoding: UTF-8");
-//            header("Content-Length: " . strlen($response));
-//            echo $response;
         }
     }
 
     public function create($param) {
-        //echo "<h3>create</h3>";
         $login = filter_input(INPUT_POST, "login");
         $password = filter_input(INPUT_POST, "password");
         $email = filter_input(INPUT_POST, "email");
-
-        //print_r($_REQUEST);
 
         $this->check_empty($login, $password, $email);
         $this->try_check_login($login);
@@ -94,22 +75,20 @@ class user implements mcapi {
     }
 
     public function get($param) {
-        // echo "<h3>get</h3>";
+        if(isset($_SESSION["login"]) == true){
+            httpResponse("you are autenticated!", 400);
+        }
         $login = filter_input(INPUT_POST, "login");
         $password = filter_input(INPUT_POST, "password");
 
-        $q = "SELECT count(*) FROM user_tbl WHERE user_login "
-                . "LIKE '{$login}' AND user_password LIKE '{$passowrd}'";
+        $q = "SELECT count(*) FROM user_tbl "
+                . "WHERE user_login LIKE '{$login}' "
+                . "AND user_password LIKE '{$password}'";
         $result = $this->conn->do_query($q);
 
         if ($result[0][0] === 0) {
             $response = "{'error':'unknown autentication pair login:password'}";
             httpResponse($response, 401);
-//            header("401 Unauthorized");
-//            header("Content-Type: text/html; charset=utf-8");
-//            header("Content-Encoding: UTF-8");
-//            header("Content-Length: " . strlen($response));
-//            echo $response;
         }
         $_SESSION["login"] = $login;
         httpResponse("user {$login} autenticated successfully!", 200);
@@ -123,4 +102,11 @@ class user implements mcapi {
         $this->get($param);
     }
 
+    public function logout($param) {
+        if(isset($_SESSION["login"]) === false){
+            httpResponse("you are not autenticated!", 400);
+        }
+        unset($_SESSION["login"]);
+        httpResponse("loged out!", 200);
+    }
 }
