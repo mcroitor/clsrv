@@ -1,15 +1,8 @@
-<?php
-/**
- * The default page.
- * 
- */
-
-// 0. include dependencies
-require_once './config.php';
-require_once './core/db.class.php';
-
-$db = new db($dbcfg);
-// 1. get params
-// 2. parse params
-// 3. create page. page load modules, module reacts to param
-// 4.return page
+<form method="post" action="./?=user/create">
+    <table>
+        <tr><td>Login:</td><td><input type="text" name="login" /></td></tr>
+        <tr><td>Password:</td><td><input type="text" name="password" /></td></tr>
+        <tr><td>Email:</td><td><input type="text" name="email" /></td></tr>
+        <tr><td colspan="2"><input type="submit" /></td></tr>
+    </table>
+</form>
