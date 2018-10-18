@@ -6,8 +6,8 @@ session_start();
 
 include_once '../config.php';
 include_once '../core/autoload.php';
-include_once '../core/db.class.php';
-include_once '../core/httpcodes.php';
+include_once '../core/classes/db.class.php';
+include_once '../core/httpcodes.lib.php';
 
 $conn = new db($dbcfg);
 // 1. get transmitted data

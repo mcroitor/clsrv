@@ -2,13 +2,17 @@
 /**
  * The configuration file.
  */
-$dbtype = "mysql";
-$dbname = "clsrv_db";
-$dbhost = "localhost";
-$dbspec = "";
+/*
+ * $dbtype = "mysql";
+ * $dbname = "clsrv_db";
+ * $dbhost = "localhost";
+ * $dbspec = "";
+ * $dsn = "{$dbtype}:dbname={$dbname};host={$dbhost};{$dbspec}";
+ */
+$dbtype = "sqlite";
+$dbfile = "./clsrv_db.sqlite";
 
-$dsn = "{$dbtype}:dbname={$dbname};host={$dbhost};{$dbspec}";
-
+$dsn = "{$dbtype}:{$dbfile}";
 /**
  * dsn examples
  * # mysql: 'mysql:dbname=<dbanme>;host=<host>'
@@ -17,8 +21,16 @@ $dsn = "{$dbtype}:dbname={$dbname};host={$dbhost};{$dbspec}";
  * # oracle (OCI): 'oci:dbname=<tns_here>'
  */
 
+/**
+ * $dbcfg = [
+ *    "dsn" => $dsn,
+ *    "username" => "root",
+ *    "password" => "password"
+ * ];
+ */
+
 $dbcfg = [
     "dsn" => $dsn,
-    "username" => "root",
-    "password" => "password"
+    "username" => "",
+    "password" => ""
 ];

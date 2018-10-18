@@ -4,7 +4,7 @@ echo "<h2>Installation script</h2>";
 
 /* TODO #INS01: write installation script */
 include_once '../config.php';
-include_once '../core/db.class.php';
+include_once '../core/classes/db.class.php';
 
 $db = new db($dbcfg);
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once '../core/mcapi.interface.php';
+include_once '../core/interfaces/mcapi.interface.php';
 
 /**
  * _manage users_

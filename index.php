@@ -1,8 +1,19 @@
-<form method="post" action="./?=user/create">
-    <table>
-        <tr><td>Login:</td><td><input type="text" name="login" /></td></tr>
-        <tr><td>Password:</td><td><input type="text" name="password" /></td></tr>
-        <tr><td>Email:</td><td><input type="text" name="email" /></td></tr>
-        <tr><td colspan="2"><input type="submit" /></td></tr>
-    </table>
-</form>
+<?php
+/*
+ * default page
+ *  1. include dependencies
+ *  2. create page object
+ *  3. generate html
+ * generated page will communicate with site by API ./api/
+ */
+
+include_once './config.php';
+include_once './core/autoload.php';
+include_once './core/common.lib.php';
+include_once './core/classes/db.class.php';
+include_once './core/httpcodes.lib.php';
+
+$conn = new db($dbcfg);
+
+$page = new page($conn);
+echo $page->html();
