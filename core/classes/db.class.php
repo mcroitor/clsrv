@@ -12,7 +12,7 @@ class db {
         $result = $this->conn->query($query);
         
         if($return_value === true && isset($result) === true){
-            return $result->fetchAll();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
         }
         return null;
     }

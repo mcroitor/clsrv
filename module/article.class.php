@@ -32,9 +32,12 @@ class article implements mcapi {
             // return specified article
             $id = (int) $param;
             $article = $this->conn->do_query(
-                    "SELECT * FROM article_tbl WHERE article_id={$id}"
+                    "SELECT * FROM article_tbl WHERE article_id={$id} LIMIT 1"
             );
-            return fill_template($this->template, $article[0], "<!-- ** -->");
+            if (empty($article)) {
+               header("HTTP/1.0 404 {$httpcode[404]}");
+            }
+            return json_encode($article[0]);
         }
     }
 
