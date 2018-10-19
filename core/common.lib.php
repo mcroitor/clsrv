@@ -39,10 +39,11 @@ function _link($link, $url = "#", $style = 'link') {
  * @param array $data An associative array, each pair is pattern => value
  * @return string
  */
-function fill_template($template, array $data) {
+function fill_template($template, array $data, $modifier = "**") {
     $html = $template;
     foreach ($data as $pattern => $value) {
-        $html = str_replace($pattern, $value, $html);
+        $p = str_replace("**", $pattern, $modifier);
+        $html = str_replace($p, $value, $html);
     }
     return $html;
 }

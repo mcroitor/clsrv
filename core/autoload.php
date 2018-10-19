@@ -1,6 +1,6 @@
 <?php
 function autoloader($name) {
-    $path = "./module/{$name}.class.php";
+    $path = ROOTPATH . "./module/{$name}.class.php";
     // echo "autoload '{$name}' class, path = {$path}<br />";
     if(file_exists($path) === true){
         include_once $path;

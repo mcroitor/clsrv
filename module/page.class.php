@@ -2,15 +2,15 @@
 
 class page {
 
-    var $page_tpl;
+    var $template;
     var $config;
     var $conn;
 
-    function __construct($conn) {
+    function __construct(db $conn) {
         $this->conn = $conn;
         $this->config = [];
         $theme = isset($this->config["theme"]) ? $this->config["theme"] : "default";
-        $this->page_tpl = file_get_contents("./themes/{$theme}/index.tpl.php");
+        $this->template = file_get_contents(ROOTPATH . "./themes/{$theme}/index.tpl.php");
     }
 
     function html() {
@@ -24,7 +24,7 @@ class page {
             "<!-- page-aside -->" => "",
             "<!-- page-footer -->" => ""
         ];
-        return fill_template($this->page_tpl, $data);
+        return fill_template($this->template, $data);
     }
 
 }

@@ -25,3 +25,13 @@ $q = "CREATE TABLE user_tbl ("
         . "user_email VARCHAR(255) NOT NULL,"
         . "PRIMARY KEY(user_id))";
 $db->do_query($q, false);
+
+// article module
+$q = "CREATE TABLE article_tbl ("
+        . "article_id INT NOT NULL AUTO_INCREMENT, "
+        . "article_title VARCHAR(255) NOT NULL,"
+        . "article_body TEXT NOT NULL,"
+        . "article_published DATE NOT NULL,"
+        . "article_author_id INT NOT NULL,"
+        . "PRIMARY KEY(article_id))";
+$db->do_query($q, false);

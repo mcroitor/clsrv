@@ -7,7 +7,7 @@
         <!-- page-styles -->
         <script>
             function load_content() {
-                $("main").append("<p>Welcome page</p>").show();
+                $("main").load("./api/?q=article/get/1");
             }
         </script>
     </head>
